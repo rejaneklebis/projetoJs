@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 7 - Atividade React</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        function TypewriterEffect({ text, speed = 100 }) {
+            const [displayedText, setDisplayedText] = React.useState("");
+
+            React.useEffect(() => {
+                let index = 0;
+                const interval = setInterval(() => {
+                    setDisplayedText((prev) => prev + text.charAt(index));
+                    index++;
+                    if (index >= text.length) clearInterval(interval);
+                }, speed);
+                
+                return () => clearInterval(interval);
+            }, [text, speed]);
+            
+            return <h1>{displayedText}</h1>;
+        }
+
+        function MeuElemento() {
+            return (
+                <div>
+                    <TypewriterEffect text="  Venha Estudar Na Fatec!" speed={100} />
+                </div>
+            );
+        }
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<MeuElemento/>);
+    </script>     
+</body>
+</html>
+
+
